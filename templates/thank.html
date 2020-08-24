@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <meta name="author" content="CodePixar">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta charset="UTF-8">
+    <title>Karma Shop</title>
+</head>
+<body>
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Thank You!</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a>Thank you!</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Contact Area =================-->
+<section class="contact_area section_gap_bottom">
+    <div class="container">
+        <div class="mx-auto m-5 w-50" style="line-height: 9rem">
+            <div class="display-4 font-weight-bold" style="color: #ffba00">Thanks for Shopping With Us</div>
+            <h2 class="text-center" style="margin: 25px">Your BILL ID is : {{ billid }}</h2>
+            <a href="{% url 'Shopping:Shopping' %}" class="btn primary-btn text-white w-100">More Shopping</a>
+        </div>
+    </div>
+</section>
+<!--================Contact Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+</body>
+
+</html>

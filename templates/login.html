@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <!--
+        CSS
+        ============================================= -->
+</head>
+
+<body>
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb form-control">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Login/Register</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="category.html">Login/Register</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" src="{% static 'img/login.jpg' %}" alt="">
+                    <div class="hover">
+                        <h4>New to our website?</h4>
+                        <p>There are advances being made in science and technology everyday, and a good example of this
+                            is the</p>
+                        <a class="primary-btn" href="{% url 'Shopping:signupform' %}">Create an Account</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" id="id_show">
+                <div class="login_form_inner" id="id_forogemailform" style="display: none">
+                    <h3>Forget Password</h3>
+                    <form class="row login_form" method="post" id="forgetForm" novalidate="novalidate">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group" id="id_forgemaildiv">
+                            <input type="email" name="forgemail" id="id_forgemial" required class="form-control"
+                                   placeholder="Confirmation Email">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="primary-btn">Send Email</button>
+                        </div>
+                        <div class="col-md-12 form-group d-flex">
+                            <a href="/Shopping">Home</a> &nbsp;&nbsp;<a id="changeformdiv">Login</a>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="login_form_inner" id="show_email_form">
+                    <h3>Log in to enter</h3>
+                    <form class="row login_form" method="post" id="contactForm" novalidate="novalidate">
+                        {% csrf_token %}
+                        {#                    {{ form.error_messages }}#}
+                        {% if messages %}
+                            {% for value in messages %}
+                                <ul class="errorlist">
+                                    <li>{{ value }}</li>
+                                </ul>
+                            {% endfor %}
+
+                        {% endif %}
+                        {% for foo in form %}
+                            <div class="col-md-12 form-group">
+                                {{ foo }}
+                            </div>
+                        {% endfor %}
+                        <div class="col-md-12 form-group">
+                            <div class="creat_account">
+                                <input type="checkbox" id="f-option2" name="selector">
+                                <label for="f-option2">Keep me logged in</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="primary-btn">Log In</button>
+                            <a id="changeform">Forgot Password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--================End Login Box Area =================-->
+<script>
+    document.getElementById('id_username').placeholder = 'Email';
+    document.getElementById('id_username').type = 'email';
+    document.getElementById('id_username').classList.add('form-control');
+    document.getElementById('id_password').placeholder = 'Password';
+    document.getElementById('id_password').classList.add('form-control');
+
+    document.getElementById('changeform').addEventListener('click', function () {
+        $('#show_email_form').slideUp();
+        $('#id_forogemailform').fadeIn();
+    })
+    document.getElementById('changeformdiv').addEventListener('click', function () {
+        $('#show_email_form').fadeIn();
+        $('#id_forogemailform').slideUp();
+    })
+
+    document.getElementById('forgetForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var forgemail = document.getElementById('id_forgemial').value;
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (forgemail=="") {
+            document.getElementById('id_forgemaildiv').innerHTML = document.getElementById('id_forgemial').outerHTML + '<p style="color: red">Please Fill the Required Field</p>'
+        }else if (reg.test(forgemail)==false){
+             document.getElementById('id_forgemaildiv').innerHTML = document.getElementById('id_forgemial').outerHTML + '<p style="color: red">Invalid Email</p>'
+        }
+        else {
+            var xml=new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState==4 && this.status==200){
+                    var output = this.response;
+                    if (String(output).includes('Error')) {
+                        document.getElementById('id_forgemaildiv').innerHTML = document.getElementById('id_forgemial').outerHTML + `<p style="color: red">${output}</p>`;
+                    }else{
+                        document.getElementById('id_forgemaildiv').innerHTML = document.getElementById('id_forgemial').outerHTML + `<p style="color: dodgerblue">${output}</p>`;
+                    }
+                }
+            };
+            xml.open('GET','/Shopping/ForgetEmail?email='+forgemail,true);
+            xml.send();
+        }
+    })
+
+
+</script>
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+
+</body>
+
+</html>

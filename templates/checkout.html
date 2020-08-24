@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head> {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <style>
+        .radion_btn input[type=radio] {
+            visibility: visible !important;
+            position: relative !important;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Checkout</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Checkout</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        {% if request.session.coupon %}
+        {% else %}
+            <div class="cupon_area" id="coupon_area">
+                <div class="check_title">
+                    <h2>Have a coupon? <a href="#">Apply Your Coupon CODE Here</a></h2>
+                </div>
+                <input type="text" id="couponint" placeholder="Enter coupon code">
+                <a class="tp_btn" id="couponbtn">Apply Coupon</a>
+            </div>
+            <script>
+
+                document.getElementById('couponbtn').addEventListener('click', function () {
+                    var couponint = document.getElementById('couponint').value;
+                    if (couponint == "") {
+                        alert('Empty')
+                        document.getElementById('couponint').outerHTML += "<p style='color: red'>Please Enter CODE</p>"
+                    } else {
+                        var xml = new XMLHttpRequest();
+                        xml.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var output = this.response;
+                                if (output == "error") {
+                                    alert('fail')
+                                    document.getElementById('couponint').outerHTML += "<p style='color: red'>Wrong CODE.Try again</p>"
+                                } else {
+                                    alert('success')
+                                    document.getElementById('coupon_area').style.display = "none"
+                                    document.getElementById('gtr').innerHTML = '&#8377; ' + output;
+                                }
+                            }
+                        };
+                        xml.open('GET', '/Shopping/applyCouponCode?code=' + couponint, true)
+                        xml.send()
+                    }
+                })
+            </script>
+        {% endif %}
+
+        <div class="billing_details">
+            <form class="row contact_form" method="post" id="checkoutform" novalidate="novalidate">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-8 order_box">
+                        <h3>Billing Details</h3>
+                        <div class="row contact_form ">
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="first" name="fname">
+                                <span class="placeholder" data-placeholder="First name"></span>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="last" name="lname">
+                                <span class="placeholder" data-placeholder="Last name"></span>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="tel" class="form-control" id="phn" name="phn">
+                                <span class="placeholder" data-placeholder="Phone number"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="number" max="7" class="form-control" id="zip" name="zip"
+                                       placeholder="Postcode/ZIP">
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="city" name="city">
+                                <span class="placeholder" data-placeholder="Town/City"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <label for="add1">Address</label>
+                                <textarea class="form-control" id="add1" name="addr"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="order_box">
+                            <h2>Your Order</h2>
+                            <ul class="list">
+                                <li><a href="#">Product <span>Total</span></a></li>
+                                {% for key,value in request.session.cart.items %}
+
+                                    <li><a href="#">{{ value.name }} <span class="middle">x {{ value.quantity }}</span>
+                                        <span
+                                                class="last">&#8377; {{ value.total }}</span></a></li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="list list_2">
+                                <input type="hidden" value="{{ request.session.grandtotal }}" id="gt">
+                                <li><a href="#">Total <span id="gtr">&#8377; {{ request.session.grandtotal }}</span></a>
+                                </li>
+                            </ul>
+                            <div class="payment_item">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option5" name="pymode">
+                                    <label for="f-option5">Online</label>
+                                    <div class="check"></div>
+                                </div>
+                            </div>
+                            <div class="payment_item active">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option6" name="pymode">
+                                    <label for="f-option6">COD (Cash on Delivery) </label>
+                                    <div class="check"></div>
+                                </div>
+                            </div>
+                            <button class="primary-btn text-white w-100" id="submit" type="button">Proceed to Pay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<script>
+    document.getElementById('submit').addEventListener('click', function () {
+        var control = document.getElementById('checkoutform').elements;
+        var flag = true
+        var statustype = ''
+        var form = new FormData();
+        if (document.getElementById('f-option5').checked == true) {
+            form.append('pytp', 'online')
+            statustype = 'online'
+        } else if (document.getElementById('f-option6').checked == true) {
+            form.append('pytp', 'COD')
+            statustype = 'COD'
+        } else {
+            flag = false
+            alert('Please Select Payment Option')
+        }
+        if (flag == true) {
+            for (var i = 0; i < control.length - 1; i++) {
+                if (control[i].value == "") {
+                    flag = false
+                    control[i].outerHTML = String(control[i].outerHTML) + '<p style="color:red">Please Fill this Field</p>'
+                }
+                form.append(control[i].name, control[i].value)
+            }
+        }
+        if (flag == true && statustype == 'COD') {
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var output = this.response;
+                    console.log(Number.isInteger(parseInt(output)))
+                    if (Number.isInteger(parseInt(output))) {
+                        window.location.href = '/Shopping/thanks?billid=' + output
+                        alert(output)
+                    }
+                }
+            };
+            xml.open('POST', '/Shopping/checkout', true)
+            xml.send(form)
+        } else if (flag == true && statustype == 'online') {
+            var amount = parseInt(document.getElementById('gt').value) * 100;
+            var options = {
+                "key": "rzp_test_dRWiKHS7zr2Gki",
+                "amount": amount,
+                "name": "",
+                "description": "",
+                "image": "",
+                "handler": function (response) {
+                    //alert(response.razorpay_payment_id);
+                    if (response.razorpay_payment_id == "") {
+                        // alert('Failed');
+                        window.location.href = "failpayment";
+                    } else {
+                        var xml = new XMLHttpRequest();
+                        xml.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var output = this.response;
+                                if (Number.isInteger(parseInt(output))) {
+                                    window.location.href = '/Shopping/thanks?billid=' + output
+                                } else {
+                                    alert(output);
+                                }
+                            }
+                        };
+                        xml.open('POST', '/Shopping/checkout', true)
+                        xml.send(form)
+                    }
+                },
+                "prefill": {
+                    "name": "",
+                    "email": "",
+                    "contact": ""
+                },
+                "notes": {
+                    "address": ""
+                },
+                "theme": {
+                    "color": "#F37254"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        } else {
+            alert('Error in Form Submission')
+        }
+    })
+</script>
+<!-- End footer Area -->
+</body>
+
+</html>

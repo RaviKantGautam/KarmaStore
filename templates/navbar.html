@@ -1,0 +1,141 @@
+{% load static %}
+<!--
+    CSS
+    ============================================= -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/nouislider.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/ion.rangeSlider.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/ion.rangeSlider.skinFlat.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/fontawesome.min.css"
+      integrity="sha512-8jdwayz5n8F2cnW26l9vpV6+yGOcRAqz6HTu+DQ3FtVIAts2gTdlFZOGpYhvBMXkWEgxPN3Y22UWyZXuDowNLA=="
+      crossorigin="anonymous"/>
+<link rel="stylesheet" href="{% static 'Input-Field-Star-Rating-Plugin-jQuery/css/simple-rating.css' %}">
+
+{% if message %}
+
+    <div role="alert" aria-live="polite" aria-atomic="true" data-delay="5000" class="toast" style="position: fixed;
+    top: 208px;
+    right: 100px;
+    z-index: 50;
+    background: linear-gradient(45deg, #a9a9a9, white,#c9a79e);
+    padding: 7px 25px;
+    border-radius: 7px;
+    box-sizing: border-box;
+    box-shadow: 6px 6px 27px 0 black;">
+        <div class="toast-header">
+            <strong class="mr-auto text-primary">Message</strong>
+        </div>
+        <div class="toast-body border-top text-danger">
+            {{ message }}
+        </div>
+    </div>
+{% endif %}
+<header class="header_area sticky-header">
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light main_box">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a class="navbar-brand logo_h" href="/Shopping"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="/Shopping">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:AllProduct' %}">Shop</a></li>
+                        <li class="nav-item submenu dropdown">
+                            <a href="#" id="id_brands" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                               role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">Brands</a>
+                            <ul class="dropdown-menu" id="id_brands_data"
+                                style="max-height: 400px;overflow-y: scroll"></ul>
+                        </li>
+                        <li class="nav-item submenu dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">My Account</a>
+                            <ul class="dropdown-menu">
+
+                                {% if user.is_authenticated and user.is_client and user.is_active and request.session.client %}
+                                    <li class="nav-item"><a class="nav-link"
+                                                            href="{% url 'Shopping:logout' %}?next={{ request.get_full_path }}">Logout</a>
+                                    </li>
+
+                                    <li class="nav-item"><a class="nav-link"
+                                                            href="{% url 'Shopping:change_password' %}">Change
+                                        Password</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:myaccount' %}">My
+                                        Account</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:myprofile' %}">My
+                                        Profile</a></li>
+                                {% elif user.is_authenticated and user.is_staff and user.is_active and request.session.client %}
+                                    <li class="nav-item"><a class="nav-link"
+                                                            href="{% url 'Shopping:login' %}">Profile</a>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:login' %}">Login</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:signupform' %}">Registration</a>
+                                    </li>
+                                {% endif %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:TrackingModel' %}">Tracking</a>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:ContactUs' %}">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item" title="Card"><a href="{% url 'Shopping:cart_detail' %}" class="cart"><span
+                                class="ti-bag" id="cart-bar"> {{ request.session.cart|length }}</span></a></li>
+                        <li class="nav-item" title="Wish List"><a
+                                href="{% url 'Shopping:wishlist_detail' %}?next={{ request.get_full_path }}"
+                                class="cart"><span
+                                class="ti-heart" id="wishlist-bar"> {{ request.session.wishlist|length }}</span></a>
+                        </li>
+                        <li class="nav-item" title="Compare List"><a
+                                href="{% url 'Shopping:compareList_detail' %}?next={{ request.get_full_path }}"
+                                class="cart"><span
+                                class="lnr lnr-sync"
+                                id="compareList-bar"> {{ request.session.compareList|length }}</span></a></li>
+                        <li class="nav-item">
+                            <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="search_input" id="search_input_box">
+        <div class="container">
+            <form class="d-flex justify-content-between" method="get" action="{% url 'Shopping:search' %}">
+                <input type="text" name="searchbar" class="form-control" id="search_input" placeholder="Search Here">
+                <button type="submit" class="btn"></button>
+                <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+            </form>
+        </div>
+    </div>
+</header>
+<style>
+    .prebg {
+        background-color: #d6d8da !important;
+        border-radius: 8px;
+        padding-left: 45px;
+        /* outline: aliceblue 7px solid; */
+        border: #a8d1f4 7px solid;
+    }
+</style>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <style>
+        .clr-btn {
+            border: none;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            padding: 0 30px;
+            line-height: 50px;
+            border-radius: 0px;
+            display: inline-block;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            -webkit-transition: all 0.3s ease 0s;
+            -moz-transition: all 0.3s ease 0s;
+            -o-transition: all 0.3s ease 0s;
+            transition: all 0.3s ease 0s;
+            width: 75%;
+            margin: 0 auto;
+        }
+    </style>
+
+    <!--
+        CSS
+        ============================================= -->
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>My Profile</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">My Profile</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<section class="login_box_area section_gap">
+    <div class="display-4 font-weight-bold text-center text-uppercase">My Profile</div>
+</section>
+
+<!--================Login Box Area =================-->
+<section>
+    <div class="container">
+        <div class="w-50 mx-auto" style="box-shadow: 0 0 150px 6px black;
+    border-radius: 13px;">
+            {% for message in messages %}
+                <p class="text-danger">{{ message }}</p>
+            {% endfor %}
+            {% if form.background_pic %}
+                <div style="background: url('/static/media/{{ user.background_pic.name }}');width: 100%;border-radius: 12px 12px 0 0">
+                    <div style="width: 10rem;
+    border-radius: 137px;
+    margin: 0 auto;
+    padding: 12px;">
+            {% else %}
+             <div style="background: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b62ad883-1ae0-4677-abf7-fa4c0a1cefc7/da3f1ys-4bbc8d9d-e05c-460b-bc5d-f718e97ea363.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvYjYyYWQ4ODMtMWFlMC00Njc3LWFiZjctZmE0YzBhMWNlZmM3XC9kYTNmMXlzLTRiYmM4ZDlkLWUwNWMtNDYwYi1iYzVkLWY3MThlOTdlYTM2My5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.CsJ1zLzhH2I0LWg53wOnFiTr1N6prtlOXInENtI9miI);width: 100%;border-radius: 12px 12px 0 0">
+                    <div style="width: 10rem;
+    border-radius: 137px;
+    margin: 0 auto;
+    padding: 12px;">
+                    {% endif %}
+                        {% if form.pro_pic %}
+                            <img id="photo" src="/static/media/{{ user.pro_pic.name }}" alt="" style="width: 100%;
+    border-radius: 85px;">
+                        {% else %}
+                            <img id="photo"
+                                 src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                                 alt="" style="width: 100%;border-radius: 85px;">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="container p-5">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for f in form %}
+                            <div class="form-group">
+                                {{ f.label }}
+                                {{ f }}
+                                {{ f.error }}
+                            </div>
+                        {% endfor %}
+                        <hr>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn primary-btn">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<br><br><br><br>
+<!--================End Login Box Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+<script>
+    var file = document.getElementById("id_pro_pic");
+    var img = document.getElementById("photo");
+    {#var labelimgname = document.getElementById("labelimgname");#}
+
+    document.getElementById('id_pro_pic').addEventListener('change', function (input) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            img.src = e.target.result;
+            {#labelimgname.innerHTML = input.files[0].name;#}
+        };
+        reader.readAsDataURL(input.files[0]);
+    })
+
+</script>
+
+</body>
+
+</html>

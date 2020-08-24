@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <style>
+        .pagination {
+            visibility: visible;
+            display: -ms-flexbox;
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem
+        }
+
+        .pagination li {
+            border: grey 1px solid
+        }
+
+        .pagination li.active {
+            visibility: visible;
+            width: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: inline-block;
+            background: #cdcbcb;
+            color: #FFFFFF;
+        }
+
+        .pagination li.disabled {
+            visibility: hidden;
+        }
+
+        label {
+            color: #a09898;
+            font-family: fantasy;
+            font-size: medium;
+            text-decoration: underline #a09898 dotted;
+        }
+
+        .list {
+            position: absolute;
+            max-height: 335px;
+            overflow-y: scroll !important;
+        }
+
+        .clr-btn {
+            width: 100%;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            padding: 0 30px;
+            line-height: 50px;
+            border-radius: 0px;
+            display: inline-block;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            -webkit-transition: all 0.3s ease 0s;
+            -moz-transition: all 0.3s ease 0s;
+            -o-transition: all 0.3s ease 0s;
+            transition: all 0.3s ease 0s;
+            margin: 0 auto;
+        }
+
+        .mybtn {
+            width: 75px;
+            background: linear-gradient(111deg, #f8b634, transparent);
+            border: none;
+            outline: 1px solid #f8b634;
+            box-sizing: border-box;
+            box-shadow: 8px 5px 16px #f8b634;
+        }
+
+        table {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=0, Color=#FFAC4D)"; /*IE 8*/
+            -moz-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*FF 3.5+*/
+            -webkit-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+            box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=135, Color=#FFAC4D); /*IE 5.5-7*/
+        }
+    </style>
+    <!--
+        CSS
+        ============================================= -->
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>All Products</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="category.html">All Products</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Login Box Area =================-->
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3">
+                {% if filter %}
+                    <div class="filter-bar d-flex flex-wrap align-items-center mt-5">
+                        <div class="pagination p-3 mt-5">
+                            <form method="get">
+                                {% for f in filter.form %}
+                                    <div class="row">
+                                        <div class="col-sm-3">{{ f.label }}</div>
+                                        <hr>
+                                        <br>
+                                        <div class="col-sm-8">{{ f }}</div>
+                                        <hr>
+                                        <br>
+                                    </div>
+
+                                {% endfor %}
+                                <hr>
+                                <input type="submit" class="primary-btn clr-btn" value="search">
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-9">
+                <!-- Start Filter Bar -->
+                {% if filter %}
+
+                    <div class="filter-bar d-flex flex-wrap align-items-center">
+                        <div class="sorting mr-auto">
+                        </div>
+                        <span style="color: black">Page No: &nbsp;&nbsp;</span>
+                        <div class="pagination">
+                            {% if object_list.has_previous %}
+                                <a href="?page={{ object_list.previous_page_number }}" class="prev-arrow"><i
+                                        class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
+                            {% else %}
+                                <a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left"
+                                                                  aria-hidden="true"></i></a>
+                            {% endif %}
+                            <a class="current" style="color: #000000">{{ object_list.number }}
+                                of {{ object_list.paginator.num_pages }}</a>
+                            {% if object_list.has_next %}
+                                <a href="?page={{ object_list.next_page_number }}" class="next-arrow"><i
+                                        class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                            {% else %}
+                                <a href="#" class="next-arrow disabled"><i class="fa fa-long-arrow-right"
+                                                                           aria-hidden="true"></i></a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                {% endif %}
+
+                <!-- End Filter Bar -->
+                <!-- Start Best Seller -->
+                <section class="lattest-product-area pb-40 category-list">
+                    <div class="row">
+                        {% if object_list %}
+                            {% for i in object_list %}
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="single-product">
+                                        <img class="img-fluid" src="{% static 'media/' %}{{ i.image }}" alt="">
+                                        <div class="product-details">
+                                            <h6>{{ i.brand.name }} {{ i.name }} {{ i.catid.name }}</h6>
+                                            <div class="price">
+                                                <h6>&#8377; {{ i.netprice }}</h6>
+                                                <h6 class="badge badge-pill badge-warning"
+                                                    title="Discount {{ i.discount }}%">{{ i.discount }}%</h6>
+                                            </div>
+                                            <div class="prd-bottom">
+                                                <a onclick="cart({{ i.id }})" class="social-info mycart">
+                                                    <span class="ti-bag"></span>
+                                                    <p class="hover-text">add to bag</p>
+                                                </a>
+                                                <a onclick="wistlist({{ i.id }})" class="social-info">
+                                                    <span class="lnr lnr-heart"></span>
+                                                    <p class="hover-text">Wishlist</p>
+                                                </a>
+                                                <a onclick="compareList({{ i.id }})" class="social-info">
+                                                    <span class="lnr lnr-sync"></span>
+                                                    <p class="hover-text">compare</p>
+                                                </a>
+                                                <a href="{% url 'Shopping:Detail' i.id %}"
+                                                   class="social-info mycart">
+                                                    <span class="lnr lnr-move"></span>
+                                                    <p class="hover-text">view more</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-lg-12 col-md-12">
+                                <div class="display-1 text-center text-danger font-weight-bold">! No Product Found
+                                </div>
+                                <br><br><br>
+                            </div>
+                        {% endif %}
+                    </div>
+                </section>
+                {% if filter %}
+
+                    <div class="filter-bar d-flex flex-wrap align-items-center">
+                        <div class="sorting mr-auto">
+                        </div>
+                        <span style="color: black">Page No: &nbsp;&nbsp;</span>
+                        <div class="pagination">
+                            {% if object_list.has_previous %}
+                                <a href="?page={{ object_list.previous_page_number }}" class="prev-arrow"><i
+                                        class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
+                            {% else %}
+                                <a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left"
+                                                                  aria-hidden="true"></i></a>
+                            {% endif %}
+                            <a class="current" style="color: #000000">{{ object_list.number }}
+                                of {{ object_list.paginator.num_pages }}</a>
+
+                            {% if object_list.has_next %}
+                                <a href="?page={{ object_list.next_page_number }}" class="next-arrow"><i
+                                        class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                            {% else %}
+                                <a href="#" class="next-arrow disabled"><i class="fa fa-long-arrow-right"
+                                                                           aria-hidden="true"></i></a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                {% endif %}
+
+                <!-- End Filter Bar -->
+            </div>
+        </div>
+    </div>
+</section>
+<br><br><br><br>
+<!--================End Login Box Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+
+</body>
+
+</html>

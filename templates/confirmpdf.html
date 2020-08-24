@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    {% load static %}
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <style>
+        th{
+            font-weight: bolder;
+            font-size: 1.3rem;
+            text-align: left;
+        }
+    </style>
+    <!--
+        CSS
+        ============================================= -->
+</head>
+
+<body style="padding: 20%">
+<!-- End Banner Area -->
+
+<!--================Order Details Area =================-->
+<br><br>
+<div style="text-align: center;font-size: 3rem"><u>Thank you. Your order has been received.</u></div>
+<br><br><br>
+<table>
+    <thead>
+    <tr>
+        <th>Order Info</th>
+        <th>Personal Info</th>
+        <th>Shipping Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        
+            <td>Order number: {{ orderbill.pk }}</td>
+            <td>Date: {{ orderbill.datetime }}</td>
+            <td>Total: {{ orderbill.grandtotal }}</td>
+            <td>Payment method: {{ orderbill.payment_method }}</td>
+        </tr>
+    <tr>
+        
+            <td>Name: {{ orderbill.fname }} {{ orderbill.lname }}</td>
+            <td>Email: {{ orderbill.email }}</td>
+            <td>Mobile Number: {{ orderbill.phn }}</td>
+            <td>Applied Coupon : {{ orderbill.coupon }}</td>
+        </tr>
+    <tr>
+        
+            <td>Street: {{ orderbill.addr }}</td>
+            <td>City: {{ orderbill.city }}</td>
+            <td>Postcode : {{ orderbill.zipcode }}</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<br>
+<div style="font-size: 1.5rem;text-align: center">Order Details</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in orderbilldetail %}
+        <tr>
+            <td>
+                <p>{{ i.proid.name }}</p>
+            </td>
+            <td>
+                <h5>x {{ i.qty }}</h5>
+            </td>
+            <td>
+                <p>&#8377; {{ i.price }}</p>
+            </tr>
+    {% endfor %}
+    <tr>
+        <td>
+            <h4>Net Amount</h4>
+        </td>
+        <td>
+            <h5></h5>
+        </td>
+        <td>
+            <p>&#8377; {{ orderbill.nettotal }}</p>
+        </tr>
+    <tr>
+        <td>
+            <h4>GST</h4>
+        </td>
+        <td>
+            <h5></h5>
+        </td>
+        <td>
+            <p>{{ orderbill.GST }}%</p>
+        </tr>
+    <tr>
+        <td>
+            <h4>Applied Coupon</h4>
+        </td>
+        <td>
+            <h5></h5>
+        </td>
+        <td>
+            <p>&#8377; {% if orderbill.coupon %}
+                {{ orderbill.coupon.price }
+                        {% else %}
+                0
+            {% endif %}
+            </p>
+        </tr>
+    <tr>
+        <td>
+            <h4>Total</h4>
+        </td>
+        <td>
+            <h5></h5>
+        </td>
+        <td>
+            <p>&#8377; {{ orderbill.grandtotal }}</p>
+        </tr>
+    </tbody>
+</table>
+<!--================End Order Details Area =================-->
+
+<!-- start footer Area -->
+<!-- End footer Area -->
+
+</body>
+
+</html>

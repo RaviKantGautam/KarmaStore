@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head> {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <style>
+        .pagination {
+            visibility: visible;
+            display: -ms-flexbox;
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem
+        }
+
+        .pagination li {
+            border: grey 1px solid
+        }
+
+        .pagination li.active {
+            visibility: visible;
+            width: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: inline-block;
+            background: #cdcbcb;
+            color: #FFFFFF;
+        }
+
+        .pagination li.disabled {
+            visibility: hidden;
+        }
+
+        table {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=0, Color=#FFAC4D)"; /*IE 8*/
+            -moz-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*FF 3.5+*/
+            -webkit-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+            box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=135, Color=#FFAC4D); /*IE 5.5-7*/
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Staff Profile</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a class="text-white">All Trackings</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<br><br><br>
+<!--================Contact Area =================-->
+<section class="contact_area section_gap_bottom">
+    <div class="container">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr class="bg-dark text-white">
+                <th>ID</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Mob. No.</th>
+                <th>Email</th>
+                <th>Zipcode</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if context|length > 0 %}
+                {% for b in context %}
+                    {#                    {% if b.status != 'cr' %}#}
+                    <tr>
+                        <td>{{ b.id }}</td>
+                        <td>{{ b.status }}</td>
+                        <td>{{ b.datetime }}</td>
+                        <td>{{ b.addr }}</td>
+                        <td>{{ b.city }}</td>
+                        <td>{{ b.phn }}</td>
+                        <td>{{ b.email }}</td>
+                        <td>{{ b.zipcode }}</td>
+                        <td><a href="{% url 'Shopping:staff_profile_update' b.id %}" class="btn btn-outline-info">Update</a></td>
+                    </tr>
+                    {#                    {% endif %}#}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="9">
+                        <div class="text-uppercase text-center display-4 text-danger">No Record</div>
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        {% if is_paginated %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+
+        {% endif %}
+    </div>
+</section>
+<!--================Contact Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+</body>
+
+</html>

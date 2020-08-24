@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head> {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <style>
+        ol.progtrckr {
+            margin: 0;
+            padding: 0;
+            list-style-type none;
+        }
+
+        ol.progtrckr li {
+            display: inline-block;
+            text-align: center;
+            line-height: 3.5em;
+        }
+
+        ol.progtrckr[data-progtrckr-steps="2"] li {
+            width: 49%;
+        }
+
+        ol.progtrckr[data-progtrckr-steps="3"] li {
+            width: 33%;
+        }
+
+        ol.progtrckr[data-progtrckr-steps="4"] li {
+            width: 24%;
+        }
+
+        ol.progtrckr[data-progtrckr-steps="5"] li {
+            width: 19%;
+        }
+
+        ol.progtrckr[data-progtrckr-steps="6"] li {
+            width: 16%;
+        }
+
+        ol.progtrckr[data-progtrckr-steps="7"] li {
+            width: 14%;
+        }
+
+        ol.progtrckr[data-progtrckr-steps="8"] li {
+            width: 12%;
+        }
+
+        ol.progtrckr[data-progtrckr-steps="9"] li {
+            width: 11%;
+        }
+
+        ol.progtrckr li.progtrckr-done {
+            color: black;
+            border-bottom: 4px solid yellowgreen;
+        }
+
+        ol.progtrckr li.progtrckr-todo {
+            color: silver;
+            border-bottom: 4px solid silver;
+        }
+
+        ol.progtrckr li:after {
+            content: "\00a0\00a0";
+        }
+
+        ol.progtrckr li:before {
+            position: relative;
+            bottom: -2.5em;
+            float: left;
+            left: 50%;
+            line-height: 1em;
+        }
+
+        ol.progtrckr li.progtrckr-done:before {
+            content: "\2713";
+            color: white;
+            background-color: yellowgreen;
+            height: 2.2em;
+            width: 2.2em;
+            line-height: 2.2em;
+            border: none;
+            border-radius: 2.2em;
+        }
+
+        ol.progtrckr li.progtrckr-todo:before {
+            content: "\039F";
+            color: silver;
+            background-color: white;
+            font-size: 2.2em;
+            bottom: -1.2em;
+        }
+    </style>
+
+    <!--
+            CSS
+            ============================================= -->
+
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Order Tracking</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Fashon Category</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Tracking Box Area =================-->
+<section class="tracking_box_area section_gap">
+    <div class="container">
+    <div class="display-4 text-center">Your Package Has been Shipped. Keep Distance and Stay Healthy!!</div>
+        <br><br><br>
+        {% if data %}
+            <ol class="progtrckr" data-progtrckr-steps="{{ data|length }}">
+                {% for value in data %}
+                    {% if value.status == 'sp' %}
+                        <li class="progtrckr-done">{{ value.addr }}</li>
+                    {% else %}
+                        <li class="progtrckr-todo">Home</li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        {% else %}
+            <div class="tracking_box_inner">
+                <p>To track your order please enter your Order ID in the box below and press the "Track" button. This
+                    was given to you on your receipt and in the confirmation email you should have received.</p>
+                <form class="row tracking_form" action="{% url 'Shopping:TrackingModel' %}" method="get"
+                      novalidate="novalidate">
+                    <div class="col-md-12 form-group">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <input type="text" class="form-control" id="order" name="order" placeholder="Order ID"
+                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Order ID'">
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <button type="submit" value="submit" class="primary-btn">Track Order</button>
+                    </div>
+                </form>
+            </div>
+
+        {% endif %}
+    </div>
+</section>
+<!--================End Tracking Box Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+
+
+</body>
+
+</html>

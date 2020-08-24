@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <script>
+        function cartqty(id) {
+            var qty = document.getElementById('sst').value;
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href = this.response;
+                }
+            };
+            xml.open('GET', `/Shopping/cart/item_increment_qty/${id}/${qty}`, true)
+            xml.send()
+
+        }
+    </script>
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Product Details Page</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="{% url 'Shopping:AllProduct' %}">Shop<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">product-details</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Single Product Area =================-->
+<div class="product_image_area">
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-6">
+                <div class="s_Product_carousel">
+                    <div class="single-prd-item">
+                        <img class="img-fluid" src="{% static 'media/' %}{{ object.image }}" alt="">
+                        <div class="caption" style="color: black;font-weight: bolder">Name: {{ object.name }}</div>
+                    </div>
+                    {% for foo in object.productphoto_set.all %}
+                        <div class="single-prd-item">
+                            <img class="img-fluid" src="{% static 'media/' %}{{ foo.photo }}" alt="">
+                            <div class="caption" style="color: black;font-weight: bolder">Name: {{ foo.name }}</div>
+                            <div class="caption" style="color: black;font-weight: normal">
+                                Caption: {{ foo.caption }}</div>
+                        </div>
+                    {% endfor %}
+                    <div class="single-prd-item">
+                        <img class="img-fluid" src="{% static 'media/' %}{{ object.image }}" alt="">
+                        <div class="caption" style="color: black;font-weight: bolder">Name: {{ object.name }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+                    <h3>{{ object.brand.name }} {{ object.name }} {{ object.catid.catname }}</h3>
+                    <h2>&#8377; {{ saleprice|floatformat }}</h2>
+                    MRP. <strike>&#8377; {{ object.netprice }}</strike>
+                    <ul class="list">
+                        <li><a class="active" href="#"><span>Brand</span> : {{ object.brand.name }}</a></li>
+                        <li><a href="#"><span>Category</span> : {{ object.catid.catname }}</a></li>
+                        <li><a href="#"><span>Discount</span> : {{ object.discount }}%</a></li>
+                        <li><a href="#"><span>Availibility</span> : {% if stock.stock > 0 %}
+                            In Stock
+                        {% else %}
+                            Out of Stock
+                        {% endif %}</a></li>
+                    </ul>
+                    <p>{{ object.desc }}</p>
+                    <div class="product_count">
+                        <label for="qty">Quantity:</label>
+                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                               class="input-text qty">
+                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                    </div>
+                    <div class="card_area d-flex align-items-center">
+                        {% if stock.stock > 0 %}
+                            <a class="primary-btn" onclick="cartqty({{ object.pk }})">Add to Cart</a>
+                        {% else %}
+                            <a class="gray_btn" onclick="document.getElementById('mess').style.display='block'">Add to
+                                Cart</a>
+                        {% endif %}
+                        <a class="icon_btn" title="Compare List" onclick="compareList({{ object.id }})"><i
+                                class="lnr lnr lnr-diamond"></i></a>
+                        <a class="icon_btn" title="Wish List" onclick="wistlist({{ object.id }})"><i
+                                class="lnr lnr lnr-heart"></i></a>
+                        <br>
+                        <div id="mess" style="color: red;display: none;padding: 15px">Item out of Stock</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Single Product Area =================-->
+
+<section class="product_description_area">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                   aria-selected="true">Description</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                   aria-controls="profile"
+                   aria-selected="false">Specification</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                   aria-controls="contact"
+                   aria-selected="false">Comments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab"
+                   aria-controls="review"
+                   aria-selected="false">Reviews</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <p>{{ object.desc }}</p>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <h5>Width</h5>
+                            </td>
+                            <td>
+                                <h5>{{ spec.width }}inch</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>Height</h5>
+                            </td>
+                            <td>
+                                <h5>{{ spec.height }}inch</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>Depth</h5>
+                            </td>
+                            <td>
+                                <h5>{{ spec.depth }}inch</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>Weight</h5>
+                            </td>
+                            <td>
+                                <h5>{{ spec.weight }}gm</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>Color</h5>
+                            </td>
+                            <td>
+                                <h5>{{ spec.color }} (HEX)</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>Quality checking</h5>
+                            </td>
+                            <td>
+                                <h5>{% if stock.stock > 1 %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>Avialability</h5>
+                            </td>
+                            <td>
+                                <h5>{% if stock.stock > 1 %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %} </h5>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="comment_list" id="commentdiv">
+                            {% for node in comment %}
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="{% static 'media/' %}{{ node.user.pro_pic.name }}" width="70"
+                                                 height="70" style="border-radius: 50px" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <h4>{{ node.user.name }}</h4>
+                                            <h5>{{ node.date|timesince }} ago</h5>
+                                            <a class="reply_btn" onclick="$('#replyForm{{ node.id }}').slideToggle()">Reply</a>
+                                        </div>
+                                    </div>
+                                    <p>{{ node.commentbody }}</p>
+                                    <form method="post" id="replyForm{{ node.id }}"
+                                          action="{% url 'Shopping:comment' %}"
+                                          style="display: none">
+                                        {% csrf_token %}
+                                        <div class="input-group"
+                                             style="padding-top: 2rem;border-top: 1px solid black">
+                                            <input type="hidden" name="parent_id" value="{{ node.id }}">
+                                            <input type="hidden" name="pid" value="{{ object.id }}">
+                                            <input type="hidden" name="user" value="{{ request.user }}">
+                                            <input type="text" class="form-control"
+                                                   style="padding: 1.4rem !important;box-shadow: none;border-color: #e9ecef"
+                                                   name="commentbody" placeholder="Add Your Replies"
+                                                   aria-describedby="inputGroupPrepend{{ node.id }}" required>
+                                            <div class="input-group-append"><span class="input-group-text"
+                                                                                  id="inputGroupPrepend{{ node.id }}"><button
+                                                    class="bg-transparent btn btn-sm text-black-50"
+                                                    type="button"
+                                                    onclick="submitReply('{{ node.id }}','{{ node.user.pro_pic.name }}','{{ node.user.name }}')">SUBMIT</button></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div id="afterreply{{ node.id }}">
+                                        {% for children in node.reply.all %}
+                                            <div class="review_item reply"
+                                                 style="border-left: 2px solid #827b7b; margin-left: 100px">
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <img src="{% static 'media/' %}{{ children.user.pro_pic.name }}"
+                                                             width="70" height="70" style="border-radius: 50px" alt="">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4>{{ children.user.name }}</h4>
+                                                        <h5>{{ children.date|timesince }}</h5>
+                                                        {#                                                        <a class="reply_btn" onclick="$('#{{ children.id }}').slideToggle()">Reply</a>#}
+                                                    </div>
+                                                </div>
+                                                <p>{{ children.commentbody }}</p>
+                                                {#                                                <form method="post" id="{{ children.id }}"#}
+                                                {#                                                      action="{% url 'Shopping:comment' %}"#}
+                                                {#                                                      style="display: none">#}
+                                                {#                                                    {% csrf_token %}#}
+                                                {#                                                    <div class="input-group"#}
+                                                {#                                                         style="padding-top: 2rem;border-top: 1px solid black">#}
+                                                {#                                                        <input type="hidden" name="parent_id" value="{{ children.id }}">#}
+                                                {#                                                        <input type="hidden" name="pid" value="{{ object.id }}">#}
+                                                {#                                                        <input type="hidden" name="user" value="{{ request.user }}">#}
+                                                {#                                                        <input type="text" class="form-control"#}
+                                                {#                                                               style="padding: 1.4rem !important;box-shadow: none;border-color: #e9ecef"#}
+                                                {#                                                               name="commentbody" placeholder="Add Your Replies"#}
+                                                {#                                                               aria-describedby="inputGroupPrepend{{ children.id }}"#}
+                                                {#                                                               required>#}
+                                                {#                                                        <div class="input-group-append">#}
+                                                {#                                                                                    <span class="input-group-text"#}
+                                                {#                                                                                          id="inputGroupPrepend{{ children.id }}">#}
+                                                {#                                                                                        <button class="bg-transparent btn btn-sm text-black-50"#}
+                                                {#                                                                                                type="submit">SUBMIT</button></span>#}
+                                                {#                                                        </div>#}
+                                                {#                                                    </div>#}
+                                                {#                                                </form>#}
+                                            </div>
+                                            {#                                        {% endif %}#}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+                {% if request.user.is_authenticated and request.user.is_client %}
+                    <form method="post" id="commentForm">
+                        {% csrf_token %}
+                        <div class="input-group" style="padding-top: 2rem;border-top: 1px solid black">
+                            <input type="hidden" name="pid" id="id_pid" value="{{ object.id }}">
+                            <input type="hidden" name="user" id="id_user" value="{{ request.user }}">
+                            <input type="text" class="form-control"
+                                   style="padding: 1.4rem !important;box-shadow: none;border-color: #e9ecef"
+                                   id="validationDefaultUsername1" name="commentbody" placeholder="Add Your Comment"
+                                   aria-describedby="inputGroupPrepend22" required>
+                            <div class="input-group-append">
+                            <span class="input-group-text" id="inputGroupPrepend22"><button
+                                    class="bg-transparent btn btn-sm text-black-50" type="submit">SUBMIT</button></span>
+                            </div>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="input-group" style="padding-top: 2rem;border-top: 1px solid black">
+                        <input type="text" class="form-control"
+                               style="padding: 1.4rem !important;box-shadow: none;border-color: #e9ecef"
+                               id="validationDefaultUsername" placeholder="Add Your Comment"
+                               aria-describedby="inputGroupPrepend2" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text" disabled="true" id="inputGroupPrepend2"><a
+                                    href="{% url 'Shopping:login' %}?next={{ request.get_full_path }}"
+                                    class="bg-transparent btn btn-sm text-black-50">LOGIN</a></span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="row total_rate">
+                            <div class="col-6">
+                                <div class="box_total">
+                                    <h5>Overall</h5>
+                                    <h4>4.0</h4>
+                                    <h6>(03 Reviews)</h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="rating_list">
+                                    <h3>Based on 3 Reviews</h3>
+                                    <ul class="list">
+                                        <li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                        <li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                        <li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                        <li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                        <li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review_list" id="reviewdiv"
+                             style="position: relative;max-height: 400px;overflow-y: scroll">
+                            {% if reviewdata == None %}
+                                <div class="review_item">
+                                    <div class="media">
+                                        <p class="text-success h1">Please Share Your Reviews Here!!!</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                {% for reviewdatum in reviewdata %}
+                                    <div class="review_item">
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/user-avatar-human-profile-face-circle-1-51485.png"
+                                                     width="70" height="71" alt="">
+                                            </div>
+                                            <div class="media-body">
+                                                <h4>{{ reviewdatum.name }}</h4>
+                                                <i class="fa fa-star"></i>{{ reviewdatum.star_rating }}
+                                            </div>
+                                        </div>
+                                        <p>{{ reviewdatum.reviewbody }}</p>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="review_box">
+                            <h4>Add a Review</h4>
+
+                            <form class="row contact_form" method="post" id="reviewForm">
+                                {% csrf_token %}
+                                <div class="col-md-12">
+                                    <p>Your Rating:</p>
+                                    <input type="number" name="star_rating" min="0" required id="id_star_rating"
+                                           class="rating">
+                                    <input type="hidden" name="pid" id="id_pid" value="{{ object.id }}">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="id_name" name="name"
+                                               placeholder="Your Full name" onfocus="this.placeholder = ''"
+                                               onblur="this.placeholder = 'Your Full name'">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="id_email" name="email"
+                                               placeholder="Email Address" onfocus="this.placeholder = ''"
+                                               onblur="this.placeholder = 'Email Address'">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="id_phn" name="phn"
+                                               placeholder="Phone Number" onfocus="this.placeholder = ''"
+                                               onblur="this.placeholder = 'Phone Number'">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="reviewbody" id="id_reviewbody" rows="1"
+                                                  placeholder="Review" onfocus="this.placeholder = ''"
+                                                  onblur="this.placeholder = 'Review'"></textarea></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <div id="errorlist" style="display: none;text-align: center;color: red"></div>
+                                    <button type="submit" value="submit" id="reviewform" class="primary-btn">Submit
+                                        Now
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br><br><br><br><br>
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+<script>
+    $(document).ready(function () {
+        $('.rating').rating();
+    });
+
+    $('#reviewForm').submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '/Shopping/review',
+            data: $("#reviewForm").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    $('#errorlist').html('Thanks For Your FeedBack')
+                    $('#errorlist').css({'display': 'block', 'color': 'primary'})
+                    $("#reviewForm").trigger('reset');
+                    window.location.href = 'http://127.0.0.1:8000/Shopping/Detail/{{ object.id }}/'
+                } else {
+                    console.log(data + " is Invalid")
+                    $('#errorlist').html('Form is Invalid')
+                    $('#errorlist').css({'display': 'block', 'color': 'red'})
+                }
+            },
+        })
+    })
+
+
+    function submitReply(id, propic, proname) {
+        $.ajax({
+            type: "POST",
+            url: '/Shopping/comment',
+            data: $(`#replyForm${id}`).serialize(),
+            success: function (data) {
+                data = JSON.parse(data)
+                console.log(data[0].fields.commentbody)
+                $(`#replyForm${id}`).trigger('reset');
+                $(`#replyForm${id}`).slideToggle();
+                var t = ''
+                t += `<div class="review_item reply" style="border-left: 2px solid #827b7b; margin-left: 100px">`
+                t += `<div class="media"><div class="d-flex"><img src="/static/media/${propic}" width="70" height="70" style="border-radius: 50px" alt="">`
+                t += '</div><div class="media-body">'
+                t += `<h4>${proname}</h4>`
+                t += `<h5>${data[0].fields.date}</h5></div></div>`
+                t += `<p>${data[0].fields.commentbody}</p></div>`
+                var prev = $(`#afterreply${id}`).html()
+                $(`#afterreply${id}`).html(prev + t)
+            },
+        })
+    }
+
+
+    $('#commentForm').submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '/Shopping/comment',
+            data: $("#commentForm").serialize(),
+            success: function (data) {
+                $("#commentForm").trigger('reset');
+                console.log(data);
+                window.location.href = 'http://127.0.0.1:8000/Shopping/Detail/{{ object.id }}/'
+            },
+        })
+    })
+</script>
+</body>
+
+</html>

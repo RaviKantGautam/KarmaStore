@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    {% for foo in context %}
+        <li>{{ foo.data.commentbody }}</li>
+        {% for f in context %}
+            {% if foo.data.id == f.head.id %}
+                <ul>
+                    <li>{{ f.data.commentbody }}</li>
+                </ul>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</ul>
+</body>
+</html>

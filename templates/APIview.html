@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <!--
+        CSS
+        ============================================= -->
+</head>
+
+<body>
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>API Section</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">API view</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div id="accordion">
+            <h3>Account</h3>
+            <div>
+                <ul class="list-group">
+                    <li class="list-group-item">url: <a href="#">{{ acc.url }}</a></li>
+                    <li class="list-group-item">Method: {{ acc.method }}</li>
+                    <li class="list-group-item">Token: <a href="#">{{ acc.token }}</a></li>
+                    <li class="list-group-item">Action: <a href="#">{{ acc.act }}</a></li>
+                </ul>
+                <br><br><br><br>
+                <p class="p">
+                    Technology is the sum of techniques, skills, methods, and processes used in the production of goods
+                    or services or in the accomplishment of objectives, such as scientific investigation. Technology can
+                    be the knowledge of techniques, processes, and the like, or it can be embedded in machines to allow
+                    for operation without detailed knowledge of their workings. Systems applying technology by taking an
+                    input, changing it according to the system's use, and then producing an outcome are referred to as
+                    technology systems or technological systems.
+                    The simplest form of technology is the development and use of basic tools. The prehistoric discovery
+                    of how to control fire and the later Neolithic Revolution increased the available sources of food,
+                    and the invention of the wheel helped humans to travel in and control their environment.
+                    Developments in historic times, including the printing press, the telephone, and the Internet, have
+                    lessened physical barriers to communication and allowed humans to interact freely on a global scale.
+                    Technology has many effects. It has helped develop more advanced economies and has allowed the rise
+                    of a leisure class. Many technological processes produce unwanted by-products known as pollution and
+                    deplete natural resources to the detriment of Earth's environment. Innovations have always
+                    influenced the values of a society and raised new questions in the ethics of technology. Examples
+                    include the rise of the notion of efficiency in terms of human productivity, and the challenges of
+                    bioethics.
+                </p>
+            </div>
+            <h3>Users</h3>
+            <div>
+                <ul class="list-group">
+                    <li class="list-group-item">url: <a href="#">{{ usr.url }}</a></li>
+                    <li class="list-group-item">Method: {{ usr.method }}</li>
+                    <li class="list-group-item">Token: <a href="#">{{ usr.token }}</a></li>
+                    <li class="list-group-item">Action: <a href="#">{{ usr.act }}</a></li>
+                </ul>
+                <p class="p">Special Feature: add "&page=1" and "&ordering=columnname" and "&search=item" for
+                    more specific
+                    results LIKE :
+                    <a href="#">{{ prd.url }}&search=data&ordering=columnname&page=1</a></p>
+
+                <a href="#" class="deletebtn btn">Delete URL</a> <input type="text"
+                                                                        class="form-control w-75 d-inline-flex" disabled
+                                                                        value="{{ usr.delete.url }}">
+                <a href="#" class="deletebtn btn">Delete METHOD</a> <input type="text"
+                                                                           class="form-control w-75 d-inline-flex"
+                                                                           disabled value="{{ usr.delete.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn detailbtn">Detail URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled value="{{ usr.detail.url }}">
+                <a href="#" class="deletebtn btn detailbtn">Detail METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ usr.detail.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn updatebtn">Update URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled value="{{ usr.update.url }}">
+                <a href="#" class="deletebtn btn updatebtn">Update METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ usr.update.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn createbtn">Create URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled value="{{ usr.create.url }}">
+                <a href="#" class="deletebtn btn createbtn">Create METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ usr.create.method }}">
+
+            </div>
+            <h3>Product</h3>
+            <div>
+                <ul class="list-group">
+                    <li class="list-group-item">url: <a href="#">{{ prd.url }}</a></li>
+                    <li class="list-group-item">Method: {{ prd.method }}</li>
+                    <li class="list-group-item">Token: <a href="#">{{ prd.token }}</a></li>
+                    <li class="list-group-item">Action: <a href="#">{{ prd.act }}</a></li>
+                </ul>
+                <p class="p">Special Feature: add "&page=1" and "&ordering=columnname" and "&search=item" for
+                    more specific
+                    results LIKE :
+                    <a href="#">{{ prd.url }}&search=data&ordering=columnname&page=1</a></p>
+
+                <a href="#" class="deletebtn btn">Delete URL</a> <input type="text"
+                                                                        class="form-control w-75 d-inline-flex" disabled
+                                                                        value="{{ prd.delete.url }}">
+                <a href="#" class="deletebtn btn">Delete METHOD</a> <input type="text"
+                                                                           class="form-control w-75 d-inline-flex"
+                                                                           disabled value="{{ prd.delete.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn detailbtn">Detail URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled value="{{ prd.detail.url }}">
+                <a href="#" class="deletebtn btn detailbtn">Detail METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ prd.detail.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn updatebtn">Update URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled value="{{ prd.update.url }}">
+                <a href="#" class="deletebtn btn updatebtn">Update METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ prd.update.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn createbtn">Create URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled value="{{ prd.create.url }}">
+                <a href="#" class="deletebtn btn createbtn">Create METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ prd.create.method }}">
+
+            </div>
+            <h3>Bill</h3>
+            <div>
+                <ul class="list-group">
+                    <li class="list-group-item">url: <a href="#">{{ bill.url }}</a></li>
+                    <li class="list-group-item">Method: {{ bill.method }}</li>
+                    <li class="list-group-item">Token: <a href="#">{{ bill.token }}</a></li>
+                    <li class="list-group-item">Action: <a href="#">{{ bill.act }}</a></li>
+                </ul>
+                <p class="p">Special Feature: add "&page=1" and "&ordering=columnname" and "&search=item" for
+                    more specific
+                    results LIKE :
+                    <a href="#">{{ bill.url }}&search=data&ordering=columnname&page=1</a></p>
+
+                <a href="#" class="deletebtn btn">Delete URL</a> <input type="text"
+                                                                        class="form-control w-75 d-inline-flex" disabled
+                                                                        value="{{ bill.delete.url }}">
+                <a href="#" class="deletebtn btn">Delete METHOD</a> <input type="text"
+                                                                           class="form-control w-75 d-inline-flex"
+                                                                           disabled value="{{ bill.delete.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn detailbtn">Detail URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled
+                                                                                  value="{{ bill.detail.url }}">
+                <a href="#" class="deletebtn btn detailbtn">Detail METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ bill.detail.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn updatebtn">Update URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled
+                                                                                  value="{{ bill.update.url }}">
+                <a href="#" class="deletebtn btn updatebtn">Update METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ bill.update.method }}">
+                <hr>
+                <a href="#" class="deletebtn btn createbtn">Create URL</a> <input type="text"
+                                                                                  class="form-control w-75 d-inline-flex"
+                                                                                  disabled
+                                                                                  value="{{ bill.create.url }}">
+                <a href="#" class="deletebtn btn createbtn">Create METHOD</a> <input type="text"
+                                                                                     class="form-control w-75 d-inline-flex"
+                                                                                     disabled
+                                                                                     value="{{ bill.create.method }}">
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Login Box Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+<style>
+
+    .deletebtn {
+        color: white;
+        background: lightcoral;
+        /* border-radius: 25px; */
+        width: 147px;
+        border-radius: 0;
+        box-sizing: border-box;
+        box-shadow: 12px 5px 20px -5px palevioletred;
+    {#margin-top: 38px#}
+    }
+
+    .deletebtn:hover {
+        transition: .5s ease-in-out;
+        color: white;
+    }
+
+    .detailbtn {
+        background-color: #86fa8f !important;
+    }
+
+    .updatebtn {
+        background-color: #7addf3 !important;
+    }
+
+    .createbtn {
+        background-color: #ffba00 !important
+    }
+
+    .p {
+        padding: 15px;
+        background-color: lightyellow;
+        font-size: larger;
+    }
+</style>
+
+</body>
+
+</html>

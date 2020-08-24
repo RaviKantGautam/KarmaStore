@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head> {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+    <style>
+        .pagination {
+            visibility: visible;
+            display: -ms-flexbox;
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem
+        }
+
+        .pagination li {
+            border: grey 1px solid
+        }
+
+        .pagination li.active {
+            visibility: visible;
+            width: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: inline-block;
+            background: #cdcbcb;
+            color: #FFFFFF;
+        }
+
+        .pagination li.disabled {
+            visibility: hidden;
+        }
+
+        table {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=0, Color=#FFAC4D)"; /*IE 8*/
+            -moz-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*FF 3.5+*/
+            -webkit-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+            box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=135, Color=#FFAC4D); /*IE 5.5-7*/
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>My Account</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a class="text-white">All Transactions</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<br><br><br>
+<!--================Contact Area =================-->
+<section class="contact_area section_gap_bottom">
+    <div class="container">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr class="bg-dark text-white">
+                <th>ID</th>
+                <th>Date</th>
+                <th>GrandTotal</th>
+                <th>Payment MODE</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Zipcode</th>
+                <th colspan="2">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if billobj|length > 0 %}
+                {% for b in billobj %}
+                    {% if b.email == request.user %}
+                        <tr>
+                            <td>{{ b.id }}</td>
+                            <td>{{ b.datetime }}</td>
+                            <td>{{ b.grandtotal }}</td>
+                            <td>{{ b.payment_method }}</td>
+                            <td>{{ b.addr }}</td>
+                            <td>{{ b.city }}</td>
+                            <td>{{ b.zipcode }}</td>
+                            <td>
+                                <button type="button" style="border: none" class="primary-btn"
+                                        onclick="billdetail({{ b.id }})">
+                                    Details
+                                </button>
+                                {% if b.status == 'cr' %}
+                                {% else %}
+                                    <button type="button"
+                                            style="border: none;background: linear-gradient(90deg, #ff4d00 0%,transparent)"
+                                            class="primary-btn"
+                                            onclick="cancelorder({{ b.id }})">
+                                        Delete
+                                    </button>
+                                {% endif %}
+
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="9">
+                        <div class="text-uppercase text-center display-4 text-danger">No Record</div>
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        {% if is_paginated %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+
+        {% endif %}
+    </div>
+</section>
+<!--================Contact Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price Paid</th>
+                    </tr>
+                    </thead>
+                    <tbody id="bildet">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cancelorderModel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 for="reason">Reason</h2>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form method="get">
+                    <div class="form-group">
+                        <input type="hidden" id="cancelid" name="cancelid">
+                        <textarea name="reason" id="reason" class="form-control" autofocus></textarea>
+                    </div>
+                    <div class="form-group text-center">
+                        <button class="btn btn-outline-danger w-50" onclick="cancelorderconfirm()">CANCEL ORDER</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function cancelorder(id) {
+        $('#cancelid').val(id);
+        $('#cancelorderModel').modal('show');
+    }
+
+    function cancelorderconfirm() {
+        var id = $('#cancelid').val();
+        var reason = $('#reason').val();
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var output = this.response;
+                window.location.href = '/Shopping/myaccount'
+            }
+        };
+        xml.open('GET', `/Shopping/cancelorder?id=${id}&reason=${reason}`, true)
+        xml.send();
+    }
+</script>
+</body>
+
+</html>

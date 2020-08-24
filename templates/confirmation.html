@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head> {% load static %}
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+
+    <!--
+        CSS
+        ============================================= -->
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+{% include 'navbar.html' %}
+<!-- End Header Area -->
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Confirmation</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/Shopping">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Confirmation</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Order Details Area =================-->
+<section class="order_details section_gap">
+    <div class="container">
+        <h3 class="title_confirmation">Thank you. Your order has been received.</h3>
+        <div class="row order_d_inner">
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Order Info</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Order number</span> : {{ orderbill.pk }}</a></li>
+                        <li><a href="#"><span>Date</span> : {{ orderbill.datetime }}</a></li>
+                        <li><a href="#"><span>Total</span> : {{ orderbill.grandtotal }}</a></li>
+                        <li><a href="#"><span>Payment method</span> : {{ orderbill.payment_method }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Personal Info</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Name</span> : {{ orderbill.fname }} {{ orderbill.lname }}</a></li>
+                        <li><a href="#"><span>Email</span> : {{ orderbill.email }}</a></li>
+                        <li><a href="#"><span>Mobile Number</span> : {{ orderbill.phn }}</a></li>
+                        <li><a href="#"><span>Applied Coupon </span> : {{ orderbill.coupon }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Shipping Address</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Street</span> : {{ orderbill.addr }}</a></li>
+                        <li><a href="#"><span>City</span> : {{ orderbill.city }}</a></li>
+                        <li><a href="#"><span>Postcode </span> : {{ orderbill.zipcode }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="order_details_table">
+            <h2>Order Details</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in orderbilldetail %}
+                        <tr>
+                            <td>
+                                <p>{{ i.proid.name }}</p>
+                            </td>
+                            <td>
+                                <h5>x {{ i.qty }}</h5>
+                            </td>
+                            <td>
+                                <p>&#8377; {{ i.price }}</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            <h4>Net Amount</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <p>&#8377; {{ orderbill.nettotal }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>GST</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <p>{{ orderbill.GST }}%</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Applied Coupon</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <p>&#8377; {% if orderbill.coupon %}
+                            {{ orderbill.coupon.price }
+                                {% else %}
+                                0
+                            {% endif %}
+                                </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Total</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <p>&#8377; {{ orderbill.grandtotal }}</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            <div class="container">
+                <div class="text-center">
+                    <a href="{% url 'Shopping:thanks' %}?action=viewpdf&billid={{ orderbill.pk }}" target="_blank" class="btn btn-lg btn-outline-primary">View Bill</a>
+                    <a href="{% url 'Shopping:thanks' %}?action=downloadpdf&billid={{ orderbill.pk }}" class="btn btn-lg btn-outline-success">Download Bill</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Order Details Area =================-->
+
+<!-- start footer Area -->
+{% include 'footer.html' %}
+<!-- End footer Area -->
+
+</body>
+
+</html>
