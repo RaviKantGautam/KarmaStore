@@ -67,7 +67,7 @@ def product_delete_view(request, pk):
 @api_view(['POST',])
 @permission_classes((IsAuthenticated,))
 def product_create_view(request):
-    user = request.user
+    user = User.objects.get(email=Token.objects.get(key=request.headers['Authorization'].lstrip('Token ')).user)
     cat = Category.objects.get(pk=3)
     pd = Product(catid=cat)
     pd.name = 'UpdateApiCreateView'

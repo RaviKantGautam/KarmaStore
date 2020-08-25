@@ -48,14 +48,20 @@
             </div>
             <div class="col-lg-2 col-md-6 col-sm-6">
                 <div class="single-footer-widget">
-                    <h6>Follow Us</h6>
-                    <p>Let us be social</p>
-                    <div class="footer-social d-flex align-items-center">
-                        <a target="_blank" href="https://www.facebook.com/karmastore.in/"><i class="fa fa-facebook"></i></a>
-                        <a target="_blank" href="https://twitter.com/karmastore?lang=en"><i class="fa fa-twitter"></i></a>
-                        <a target="_blank" href="https://dribbble.com/shots/4110772-Karma"><i class="fa fa-dribbble"></i></a>
-                        <a target="_blank" href="https://www.behance.net/dima_karma"><i class="fa fa-behance"></i></a>
-                    </div>
+                    <h6>Terms and Policy</h6>
+                    <ul style="list-style: none" id="footerAPI">
+                        {#                        <li><a href="https://www.termsfeed.com/live/bfb4a18e-a54f-4cec-987f-dc5045c69765" class="footer-text">Terms & Conditions</a></li>#}
+                        <li><a href="{% url 'Shopping:term_condition' %}" class="footer-text">Terms & Conditions</a></li>
+                        <li><a href="{% url 'Shopping:policy' %}" class="footer-text">Privacy Policy</a></li>
+{#                        <li><a href="https://www.termsfeed.com/live/359896f3-e3db-4eef-9897-f58ba22a4de0" class="footer-text">Privacy Policy</a></li>#}
+                    </ul>
+                    {#                    <p>Let us be social</p>#}
+                    {#                    <div class="footer-social d-flex align-items-center">#}
+                    {#                        <a target="_blank" href="https://www.facebook.com/karmastore.in/"><i class="fa fa-facebook"></i></a>#}
+                    {#                        <a target="_blank" href="https://twitter.com/karmastore?lang=en"><i class="fa fa-twitter"></i></a>#}
+                    {#                        <a target="_blank" href="https://dribbble.com/shots/4110772-Karma"><i class="fa fa-dribbble"></i></a>#}
+                    {#                        <a target="_blank" href="https://www.behance.net/dima_karma"><i class="fa fa-behance"></i></a>#}
+                    {#                    </div>#}
                 </div>
             </div>
         </div>

@@ -7,6 +7,27 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+import sys
+from PIL import Image
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import base64
+import os
+
+def compressImage(img):
+    imageTemp = Image.open(img)
+    outputIOStream = BytesIO()
+    imageTempResize = imageTemp.resize((650,600))
+    imageTemp.save(outputIOStream,format='JPEG',quality=60)
+    outputIOStream.seek(0)
+    img = InMemoryUploadedFile(outputIOStream,'ImageField','{}.jpg'.format(img.name.split('.')[0]),'image/jpeg',sys.getsizeof(outputIOStream),None)
+    return img
+
+# def convertBase64(data):
+#     with open(os.path.walk(data.name), "rb") as fh:
+#         data = base64.b64encode(fh.read())
+#         print(data)
+#     return data
 
 class UserManager(BaseUserManager):
     def create_user(self,email,password=None):
@@ -161,6 +182,12 @@ class ProductPhoto(models.Model):
         return self.caption
     def product_image(self):
         return format_html('<img src="/static/media/{}" width="100" height="100" alt="no image found" />'.format(self.photo))
+    def save(self, *args,**kwargs):
+        if not self.id:
+            self.photo = compressImage(self.photo)
+            # checkphoto = convertBase64(self.photo)
+            # print(checkphoto)
+        super(ProductPhoto, self).save(*args,**kwargs)
 
 class ProductProperty(models.Model):
     pid = models.OneToOneField(Product, on_delete=models.CASCADE, verbose_name="Product")

@@ -146,7 +146,7 @@ class product_search(ListView):
         query = self.request.GET.get('searchbar')
         if query:
             productdata = Product.objects.filter(
-                Q(brand__name__icontains=query) | Q(name__icontains=query) | Q(catid__brand__name__icontains=query) | Q(
+                Q(name__icontains=query) | Q(brand__name__icontains=query) | Q(catid__catname=query) | Q(
                     supercat__icontains=query[0])).distinct()
             result = productdata
         else:
@@ -878,3 +878,9 @@ def Detail(request, pk):
     return render(request, 'single-product.html',
                   {'object': prd, 'stock': Stock.objects.get(pid=pk), 'spec': ProductProperty.objects.get(pid=pk),
                    'saleprice': disc, 'reviewdata': reviewdata, 'comment': commentdata})
+
+class Term_Condition(TemplateView):
+    template_name = 'term&condition.html'
+
+class Policy(TemplateView):
+    template_name = 'policy.html'

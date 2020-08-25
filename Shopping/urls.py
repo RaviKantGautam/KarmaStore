@@ -51,6 +51,7 @@ urlpatterns = [
     path('review', review, name='review'),
     path('comment', comment, name='comment'),
     path('loadcomment', loadcomment, name='loadcomment'),
-
+    path('term_condition', Term_Condition.as_view(), name='term_condition'),
+    path('policy', Policy.as_view(), name='policy'),
     path('commentpage', commentpage, name='commentpage'),
 ]

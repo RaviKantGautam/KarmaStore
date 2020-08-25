@@ -83,6 +83,7 @@ class ProductPhotoAdmin(admin.ModelAdmin):
     list_per_page = 10
     list_max_show_all = 200
     list_editable = ('caption', 'name')
+    search_fields = ('pid__name',)
     def has_module_permission(self, request):
         if request.user.is_anonymous:
             return False
