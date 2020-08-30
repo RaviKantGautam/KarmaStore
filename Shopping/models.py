@@ -13,6 +13,7 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import base64
 import os
+import random
 
 def compressImage(img):
     imageTemp = Image.open(img)
@@ -20,7 +21,7 @@ def compressImage(img):
     imageTempResize = imageTemp.resize((650,600))
     imageTemp.save(outputIOStream,format='JPEG',quality=60)
     outputIOStream.seek(0)
-    img = InMemoryUploadedFile(outputIOStream,'ImageField','{}.jpg'.format(img.name.split('.')[0]),'image/jpeg',sys.getsizeof(outputIOStream),None)
+    img = InMemoryUploadedFile(outputIOStream,'ImageField','{}.jpg'.format(img.name.split('.')[0]+str(random.randint(10000,99999))),'image/jpeg',sys.getsizeof(outputIOStream),None)
     return img
 
 # def convertBase64(data):
