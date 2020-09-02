@@ -2,6 +2,7 @@
 <html lang="zxx" class="no-js">
 
 <head>
+
     {% load static %}
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +17,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Karma Shop</title>
+    <title>{{ request.path }}</title>
     <script>
         function cartqty(id) {
             var qty = document.getElementById('sst').value;
@@ -95,7 +96,7 @@
                             Out of Stock
                         {% endif %}</a></li>
                     </ul>
-                    <p>{{ object.desc }}</p>
+                    <p href="#home">{{ object.desc|truncatewords:40 }}</p>
                     <div class="product_count">
                         <label for="qty">Quantity:</label>
                         <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
@@ -151,7 +152,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <p>{{ object.desc }}</p>
+                <p>{{ object.desc|linebreaks }}</p>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="table-responsive">

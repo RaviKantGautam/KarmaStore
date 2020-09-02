@@ -16,7 +16,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Karma Shop</title>
+    <title>{{ request.path }}</title>
 
 </head>
 
@@ -209,7 +209,7 @@
                                         <span class="lnr lnr-sync"></span>
                                         <p class="hover-text">compare</p>
                                     </a>
-                                    <a href="{% url 'Shopping:Detail' i.id %}" class="social-info">
+                                    <a href="{{ i.get_absolute_url }}" class="social-info">
                                         <span class="lnr lnr-move"></span>
                                         <p class="hover-text">view more</p>
                                     </a>
@@ -262,7 +262,7 @@
                                         <span class="lnr lnr-sync"></span>
                                         <p class="hover-text">compare</p>
                                     </a>
-                                    <a href="{% url 'Shopping:Detail' i.id %}" class="social-info">
+                                    <a href="{{ i.get_absolute_url }}" class="social-info">
                                         <span class="lnr lnr-move"></span>
                                         <p class="hover-text">view more</p>
                                     </a>
@@ -376,10 +376,10 @@
                     {% for im in dod %}
                         <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
                             <div class="single-related-product d-flex">
-                                <a href="{% url 'Shopping:Detail' im.id %}"><img src="{% static 'media/' %}{{ im.image }}" width="70" height="70"
+                                <a href="{{ im.get_absolute_url }}"><img src="{% static 'media/' %}{{ im.image }}" width="70" height="70"
                                                  alt=""></a>
                                 <div class="desc">
-                                    <a href="{% url 'Shopping:Detail' im.id %}" class="title">{{ im.name }}</a>
+                                    <a href="{{ im.get_absolute_url }}" class="title">{{ im.name }}</a>
                                     <div class="price">
                                         <h6>{{ im.netprice }}</h6>
                                         <h6 class="badge badge-pill badge-warning">{{ im.discount }}</h6>

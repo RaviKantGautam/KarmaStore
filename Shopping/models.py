@@ -14,6 +14,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import base64
 import os
 import random
+from django.urls import reverse
 
 def compressImage(img):
     imageTemp = Image.open(img)
@@ -119,6 +120,7 @@ class User(AbstractBaseUser):
         return self.active
     objects = UserManager()
 
+
 class Category(models.Model):
     catname = models.CharField(max_length=255, verbose_name="Category Name")
     desc = models.TextField(verbose_name="Description")
@@ -147,6 +149,17 @@ class Brand(models.Model):
         verbose_name = 'Brand'
         verbose_name_plural = "Brands"
 
+class ProductQueryset(models.query.QuerySet):
+    def dodactive(self):
+        return self.filter(dod=True)
+
+class ProductManager(models.Manager):
+    def get_product_id(self,id):
+        qs = self.get_queryset().filter(id=id)
+        if qs.count()==1:
+            return qs.first()
+        return None
+
 class Product(models.Model):
     supercatchoice = [("M", "Male"), ("F", "Female"), ("K", "Kids")]
     name = models.CharField(max_length=255, verbose_name="Product Name")
@@ -170,6 +183,8 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = "Products"
+    def get_absolute_url(self):
+        return reverse("Shopping:Detail",kwargs={'pk':self.pk})
 
 class ProductPhoto(models.Model):
     photo = models.ImageField(verbose_name="Product Pics")

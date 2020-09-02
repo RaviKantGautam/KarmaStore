@@ -1,4 +1,15 @@
 {% load static %}
+{% url 'Shopping:Shopping' as home_url %}
+{% url 'Shopping:AllProduct' as Allproduct_url %}
+{% url 'Shopping:change_password' as change_password_url %}
+{% url 'Shopping:myprofile' as myprofile_url %}
+{% url 'Shopping:login' as login_url %}
+{% url 'Shopping:signupform' as signupform_url %}
+{% url 'Shopping:TrackingModel' as TrackingModel_url %}
+{% url 'Shopping:ContactUs' as ContactUs_url %}
+{% url 'Shopping:logout' as logout_url %}
+{% url 'Shopping:myaccount' as myaccount_url %}
+{% url 'Shopping:myprofile' as myprofile_url %}
 <!--
     CSS
     ============================================= -->
@@ -54,8 +65,12 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="/Shopping">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:AllProduct' %}">Shop</a></li>
+                        <li class="nav-item{% if request.path == home_url %}
+                        active
+                        {% endif %}"><a class="nav-link" href="{{ home_url }}">Home</a></li>
+                        <li class="nav-item{% if request.path == Allproduct_url %}
+                        active
+                        {% endif %}"><a class="nav-link" href="{{ Allproduct_url }}">Shop</a></li>
                         <li class="nav-item submenu dropdown">
                             <a href="#" id="id_brands" class="nav-link dropdown-toggle" data-toggle="dropdown"
                                role="button"
@@ -64,7 +79,9 @@
                             <ul class="dropdown-menu" id="id_brands_data"
                                 style="max-height: 400px;overflow-y: scroll"></ul>
                         </li>
-                        <li class="nav-item submenu dropdown">
+                        <li class="nav-item submenu dropdown{% if request.path == myaccount_url or request.path == myprofile_url or request.path == change_password_url or request.path == login_url or request.path == signupform_url%}
+                        active
+                        {% endif %} ">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true"
                                aria-expanded="false">My Account</a>
@@ -72,32 +89,36 @@
 
                                 {% if user.is_authenticated and user.is_client and user.is_active and request.session.client %}
                                     <li class="nav-item"><a class="nav-link"
-                                                            href="{% url 'Shopping:logout' %}?next={{ request.get_full_path }}">Logout</a>
+                                                            href="{{ logout_url }}?next={{ request.get_full_path }}">Logout</a>
                                     </li>
 
                                     <li class="nav-item"><a class="nav-link"
-                                                            href="{% url 'Shopping:change_password' %}">Change
+                                                            href="{{ change_password_url }}">Change
                                         Password</a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:myaccount' %}">My
+                                    <li class="nav-item"><a class="nav-link" href="{{ myaccount_url }}">My
                                         Account</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:myprofile' %}">My
+                                    <li class="nav-item"><a class="nav-link" href="{{ myprofile_url }}">My
                                         Profile</a></li>
                                 {% elif user.is_authenticated and user.is_staff and user.is_active and request.session.client %}
                                     <li class="nav-item"><a class="nav-link"
                                                             href="{% url 'Shopping:login' %}">Profile</a>
                                     </li>
                                 {% else %}
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:login' %}">Login</a>
+                                    <li class="nav-item"><a class="nav-link" href="{{ login_url }}">Login</a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:signupform' %}">Registration</a>
+                                    <li class="nav-item"><a class="nav-link" href="{{ signupform_url }}">Registration</a>
                                     </li>
                                 {% endif %}
-                                <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:TrackingModel' %}">Tracking</a>
+                                <li class="nav-item{% if request.path == TrackingModel_url %}
+                        active
+                        {% endif %}"><a class="nav-link" href="{{ TrackingModel_url }}">Tracking</a>
 
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Shopping:ContactUs' %}">Contact</a></li>
+                        <li class="nav-item{% if request.path == ContactUs_url %}
+                        active
+                        {% endif %}"><a class="nav-link" href="{{ ContactUs_url }}">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item" title="Card"><a href="{% url 'Shopping:cart_detail' %}" class="cart"><span
