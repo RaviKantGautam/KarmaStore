@@ -13,7 +13,7 @@ from .form import *
 from .models import *
 from django.views.generic import *
 from django.db.models import Q
-from cart.cart import Cart
+from cart.cart import *
 from django.core import serializers
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm

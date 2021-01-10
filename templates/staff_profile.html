@@ -1,21 +1,5 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
+{% extends 'base.html' %}{% load static %}{% block styleblock %}
 
-<head> {% load static %}
-    <!-- Mobile Specific Meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
-    <!-- Author Meta -->
-    <meta name="author" content="CodePixar">
-    <!-- Meta Description -->
-    <meta name="description" content="">
-    <!-- Meta Keyword -->
-    <meta name="keywords" content="">
-    <!-- meta character set -->
-    <meta charset="UTF-8">
-    <!-- Site Title -->
-    <title>{{ request.path }}</title>
     <style>
         .pagination {
             visibility: visible;
@@ -52,13 +36,8 @@
             filter: progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=135, Color=#FFAC4D); /*IE 5.5-7*/
         }
     </style>
-</head>
-
-<body>
-
-<!-- Start Header Area -->
-{% include 'navbar.html' %}
-<!-- End Header Area -->
+{% endblock styleblock %}
+{% block content %}
 
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -145,9 +124,4 @@
 </section>
 <!--================Contact Area =================-->
 
-<!-- start footer Area -->
-{% include 'footer.html' %}
-<!-- End footer Area -->
-</body>
-
-</html>
+{% endblock %}

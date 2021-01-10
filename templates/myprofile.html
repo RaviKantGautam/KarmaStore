@@ -1,54 +1,4 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
-
-<head>
-    {% load static %}
-    <!-- Mobile Specific Meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
-    <!-- Author Meta -->
-    <meta name="author" content="CodePixar">
-    <!-- Meta Description -->
-    <meta name="description" content="">
-    <!-- Meta Keyword -->
-    <meta name="keywords" content="">
-    <!-- meta character set -->
-    <meta charset="UTF-8">
-    <!-- Site Title -->
-    <title>{{ request.path }}</title>
-    <style>
-        .clr-btn {
-            border: none;
-            position: relative;
-            overflow: hidden;
-            color: #fff;
-            padding: 0 30px;
-            line-height: 50px;
-            border-radius: 0px;
-            display: inline-block;
-            text-transform: uppercase;
-            font-weight: 500;
-            cursor: pointer;
-            -webkit-transition: all 0.3s ease 0s;
-            -moz-transition: all 0.3s ease 0s;
-            -o-transition: all 0.3s ease 0s;
-            transition: all 0.3s ease 0s;
-            width: 75%;
-            margin: 0 auto;
-        }
-    </style>
-
-    <!--
-        CSS
-        ============================================= -->
-</head>
-
-<body>
-
-<!-- Start Header Area -->
-{% include 'navbar.html' %}
-<!-- End Header Area -->
+{% extend 'base.html' %}{% extends 'base.html' %}{% load static %}{% block content %}
 
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -124,9 +74,33 @@
 <br><br><br><br>
 <!--================End Login Box Area =================-->
 
-<!-- start footer Area -->
-{% include 'footer.html' %}
-<!-- End footer Area -->
+{% endblock %}
+{% block styleblock %}
+    <style>
+        .clr-btn {
+            border: none;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            padding: 0 30px;
+            line-height: 50px;
+            border-radius: 0px;
+            display: inline-block;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            -webkit-transition: all 0.3s ease 0s;
+            -moz-transition: all 0.3s ease 0s;
+            -o-transition: all 0.3s ease 0s;
+            transition: all 0.3s ease 0s;
+            width: 75%;
+            margin: 0 auto;
+        }
+    </style>
+
+{% endblock styleblock %}
+{% block blockjs %}
+
 <script>
     var file = document.getElementById("id_pro_pic");
     var img = document.getElementById("photo");
@@ -142,7 +116,4 @@
     })
 
 </script>
-
-</body>
-
-</html>
+{% endblock %}

@@ -1,44 +1,4 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
-
-<head>
-
-    {% load static %}
-    <!-- Mobile Specific Meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="{% static 'img/fav.png' %}' %}">
-    <!-- Author Meta -->
-    <meta name="author" content="CodePixar">
-    <!-- Meta Description -->
-    <meta name="description" content="">
-    <!-- Meta Keyword -->
-    <meta name="keywords" content="">
-    <!-- meta character set -->
-    <meta charset="UTF-8">
-    <!-- Site Title -->
-    <title>{{ request.path }}</title>
-    <script>
-        function cartqty(id) {
-            var qty = document.getElementById('sst').value;
-            var xml = new XMLHttpRequest();
-            xml.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    window.location.href = this.response;
-                }
-            };
-            xml.open('GET', `/Shopping/cart/item_increment_qty/${id}/${qty}`, true)
-            xml.send()
-
-        }
-    </script>
-</head>
-
-<body>
-
-<!-- Start Header Area -->
-{% include 'navbar.html' %}
-<!-- End Header Area -->
+{% extends 'base.html' %}{% load static %}{% block content %}
 
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -277,34 +237,10 @@
                                                     <div class="media-body">
                                                         <h4>{{ children.user.name }}</h4>
                                                         <h5>{{ children.date|timesince }}</h5>
-                                                        {#                                                        <a class="reply_btn" onclick="$('#{{ children.id }}').slideToggle()">Reply</a>#}
                                                     </div>
                                                 </div>
                                                 <p>{{ children.commentbody }}</p>
-                                                {#                                                <form method="post" id="{{ children.id }}"#}
-                                                {#                                                      action="{% url 'Shopping:comment' %}"#}
-                                                {#                                                      style="display: none">#}
-                                                {#                                                    {% csrf_token %}#}
-                                                {#                                                    <div class="input-group"#}
-                                                {#                                                         style="padding-top: 2rem;border-top: 1px solid black">#}
-                                                {#                                                        <input type="hidden" name="parent_id" value="{{ children.id }}">#}
-                                                {#                                                        <input type="hidden" name="pid" value="{{ object.id }}">#}
-                                                {#                                                        <input type="hidden" name="user" value="{{ request.user }}">#}
-                                                {#                                                        <input type="text" class="form-control"#}
-                                                {#                                                               style="padding: 1.4rem !important;box-shadow: none;border-color: #e9ecef"#}
-                                                {#                                                               name="commentbody" placeholder="Add Your Replies"#}
-                                                {#                                                               aria-describedby="inputGroupPrepend{{ children.id }}"#}
-                                                {#                                                               required>#}
-                                                {#                                                        <div class="input-group-append">#}
-                                                {#                                                                                    <span class="input-group-text"#}
-                                                {#                                                                                          id="inputGroupPrepend{{ children.id }}">#}
-                                                {#                                                                                        <button class="bg-transparent btn btn-sm text-black-50"#}
-                                                {#                                                                                                type="submit">SUBMIT</button></span>#}
-                                                {#                                                        </div>#}
-                                                {#                                                    </div>#}
-                                                {#                                                </form>#}
                                             </div>
-                                            {#                                        {% endif %}#}
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -460,11 +396,11 @@
     </div>
 </section>
 <br><br><br><br><br>
+{% endblock %}
+{% block blockjs %}
 
-<!-- start footer Area -->
-{% include 'footer.html' %}
-<!-- End footer Area -->
 <script>
+
     $(document).ready(function () {
         $('.rating').rating();
     });
@@ -528,7 +464,19 @@
             },
         })
     })
-</script>
-</body>
 
-</html>
+     function cartqty(id) {
+            var qty = document.getElementById('sst').value;
+            var xml = new XMLHttpRequest();
+            xml.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href = this.response;
+                }
+            };
+            xml.open('GET', `/Shopping/cart/item_increment_qty/${id}/${qty}`, true)
+            xml.send()
+
+        }
+</script>
+
+{% endblock %}

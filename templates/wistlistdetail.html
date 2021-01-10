@@ -1,88 +1,4 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
-
-<head>
-    {% load static %}
-    <!-- Mobile Specific Meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
-    <!-- Author Meta -->
-    <meta name="author" content="CodePixar">
-    <!-- Meta Description -->
-    <meta name="description" content="">
-    <!-- Meta Keyword -->
-    <meta name="keywords" content="">
-    <!-- meta character set -->
-    <meta charset="UTF-8">
-    <!-- Site Title -->
-    <title>{{ request.path }}</title>
-    <style>
-        .clr-btn {
-            border: none;
-            position: relative;
-            overflow: hidden;
-            color: #fff;
-            padding: 0 30px;
-            line-height: 50px;
-            border-radius: 0px;
-            display: inline-block;
-            text-transform: uppercase;
-            font-weight: 500;
-            cursor: pointer;
-            -webkit-transition: all 0.3s ease 0s;
-            -moz-transition: all 0.3s ease 0s;
-            -o-transition: all 0.3s ease 0s;
-            transition: all 0.3s ease 0s;
-            width: 75%;
-            margin: 0 auto;
-        }
-
-        .pagination {
-            visibility: visible;
-            display: -ms-flexbox;
-            display: flex;
-            padding-left: 0;
-            list-style: none;
-            border-radius: .25rem
-        }
-
-        .pagination li {
-            border: grey 1px solid
-        }
-
-        .pagination li.active {
-            visibility: visible;
-            width: 40px;
-            line-height: 40px;
-            text-align: center;
-            display: inline-block;
-            background: #cdcbcb;
-            color: #FFFFFF;
-        }
-
-        .pagination li.disabled {
-            visibility: hidden;
-        }
-
-        table {
-            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=0, Color=#FFAC4D)"; /*IE 8*/
-            -moz-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*FF 3.5+*/
-            -webkit-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
-            box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
-            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=135, Color=#FFAC4D); /*IE 5.5-7*/
-        }
-    </style>
-    <!--
-        CSS
-        ============================================= -->
-</head>
-
-<body>
-
-<!-- Start Header Area -->
-{% include 'navbar.html' %}
-<!-- End Header Area -->
+{% extends 'base.html' %}{% load static %}{% block content %}
 
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -151,11 +67,64 @@
 </section>
 <br><br><br><br>
 <!--================End Login Box Area =================-->
+{% endblock %}
+{% block styleblock %}
 
-<!-- start footer Area -->
-{% include 'footer.html' %}
-<!-- End footer Area -->
+    <style>
+        .clr-btn {
+            border: none;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            padding: 0 30px;
+            line-height: 50px;
+            border-radius: 0px;
+            display: inline-block;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            -webkit-transition: all 0.3s ease 0s;
+            -moz-transition: all 0.3s ease 0s;
+            -o-transition: all 0.3s ease 0s;
+            transition: all 0.3s ease 0s;
+            width: 75%;
+            margin: 0 auto;
+        }
 
-</body>
+        .pagination {
+            visibility: visible;
+            display: -ms-flexbox;
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem
+        }
 
-</html>
+        .pagination li {
+            border: grey 1px solid
+        }
+
+        .pagination li.active {
+            visibility: visible;
+            width: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: inline-block;
+            background: #cdcbcb;
+            color: #FFFFFF;
+        }
+
+        .pagination li.disabled {
+            visibility: hidden;
+        }
+
+        table {
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=0, Color=#FFAC4D)"; /*IE 8*/
+            -moz-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*FF 3.5+*/
+            -webkit-box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+            box-shadow: 0 0 27px 11px rgba(255, 172, 77, 0.5); /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=27, Direction=135, Color=#FFAC4D); /*IE 5.5-7*/
+        }
+    </style>
+{% endblock %}
+

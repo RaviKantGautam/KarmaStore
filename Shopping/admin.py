@@ -40,7 +40,8 @@ class UserAdmin(admin.ModelAdmin):
         elif request.user.is_admin:
             return True
         else:
-            return False
+            return True
+
     def has_delete_permission(self, request, obj=None):
         return False
 

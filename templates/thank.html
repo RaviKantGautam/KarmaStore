@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
-<head>
-    {% load static %}
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
-    <meta name="author" content="CodePixar">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta charset="UTF-8">
-    <title>{{ request.path }}</title>
-</head>
-<body>
-<!-- Start Header Area -->
-{% include 'navbar.html' %}
-<!-- End Header Area -->
+{% extends 'base.html' %}{% load static %}{% block content %}
 
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -42,10 +27,4 @@
     </div>
 </section>
 <!--================Contact Area =================-->
-
-<!-- start footer Area -->
-{% include 'footer.html' %}
-<!-- End footer Area -->
-</body>
-
-</html>
+{% endblock %}
