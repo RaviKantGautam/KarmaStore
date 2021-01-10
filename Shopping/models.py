@@ -32,6 +32,7 @@ def compressImage(img):
 #     return data
 
 class UserManager(BaseUserManager):
+
     def create_user(self,email,password=None):
         if not email:
             raise ValueError('User Must have email address')
@@ -39,17 +40,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_staffuser(self, email, password):
-        """
-        Creates and saves a staff user with the given email and password.
-        """
-        user = self.create_user(
-            email,
-            password=password,
-        )
-        user.staff = True
-        user.save(using=self._db)
-        return user
+
     def create_superuser(self,email,password):
         user = self.create_user(email=email,password=password)
         user.active=True
@@ -59,7 +50,9 @@ class UserManager(BaseUserManager):
         return user
 
 def phn_no_validation(value):
+
     if str(value).isnumeric() == False:
+
         raise ValidationError('Invalid Mobile Number')
     elif len(str(value)) < 10 or len(str(value)) > 13:
         raise ValidationError('Mobile Number Should be 10 character')

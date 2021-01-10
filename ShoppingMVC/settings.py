@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ["https://karma-store.herokuapp.com/", "http://karma-store.herokuapp.com/"]
+ALLOWED_HOSTS = ["https://karma-store.herokuapp.com/Shopping/", "http://karma-store.herokuapp.com/Shopping/"]
 
 # Application definition
 
